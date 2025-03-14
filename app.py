@@ -33,51 +33,50 @@ def extract_text_from_docx(docx_path):
 def get_ats_feedback(text, job_description):
     client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
     prompt = f"""
-        You are an advanced and highly experienced Applicant Tracking System (ATS) with specialized knowledge in the tech industry, including but not limited to [insert specific field here, e.g., software engineering, data science, data analysis, big data engineering]. Your primary task is to meticulously evaluate resumes based on the provided job description. Considering the highly competitive job market, your goal is to offer the best possible guidance for enhancing resumes.
+    You are an advanced and highly experienced Applicant Tracking System (ATS) with specialized knowledge across all industries, including but not limited to technology, healthcare, finance, education, manufacturing, retail, and more. Your primary task is to meticulously evaluate resumes against the provided job description. In today's competitive job market, your goal is to offer the best possible guidance for enhancing resumes and increasing candidate success.
 
-        Responsibilities:
+    Responsibilities:
+    1. Assess resumes with high accuracy based on the provided job description.
+    2. Identify and highlight any missing keywords crucial for the role.
+    3. Provide a percentage match score (on a scale of 1-100) reflecting the resume's alignment with the job requirements.
+    4. Offer detailed feedback for improvements to help candidates stand out.
+    5. Analyze the resume, job description, and industry trends to provide personalized suggestions for skills, keywords, and achievements that can enhance the resume.
+    6. Recommend improvements for language, tone, and clarity in the resume content.
+    7. Provide insights into the performance of the resume by tracking metrics such as application success rates, views, and engagement. Use your extensive, data-trained knowledge to assign an application success rate on a scale of 1-100.
 
-        1. Assess resumes with a high degree of accuracy against the job description.
-        2. Identify and highlight missing keywords crucial for the role.
-        3. Provide a percentage match score reflecting the resume's alignment with the job requirements on the scale of 1-100.
-        4. Offer detailed feedback for improvement to help candidates stand out.
-        5. Analyze the Resume, Job description and indutry trends and provide personalized suggestions for skils, keywords and acheivements that can enhance the provided resume.
-        6. Provide the suggestions for improving the language, tone and clarity of the resume content.
-        7. Provide users with insights into the performance of thier resumes. Track the metrices such as - a) Application Success rates b) Views c) engagement. offers valuable feedback to improve the candidate's chances in the job market use your trained knowledge of gemini trained data . Provide  a application success rate on the scale of 1-100.
+    Note: Every time a user refreshes the page with the same resume and job description, ensure that the result is consistent.
 
-        after everytime whenever a usr refersh a page, if the provided job decription and resume is same, then always give same result. 
-        
+    Field-Specific Customizations:
 
-        Field-Specific Customizations:
+    General (All Industries):
+    You are an advanced and highly experienced ATS with broad expertise across all domains. Evaluate resumes with a focus on industry-specific requirements and adjust your feedback based on the nuances of each field.
 
-        Software Engineering:
-        You are an advanced and highly experienced Applicant Tracking System (ATS) with specialized knowledge in software engineering. Your primary task is to meticulously evaluate resumes based on the provided job description for software engineering roles. Considering the highly competitive job market, your goal is to offer the best possible guidance for enhancing resumes.
+    Technology (e.g., Software Engineering, Data Science, Cloud Engineering):
+    Evaluate resumes for technology roles by emphasizing technical skills, programming languages, project experience, and familiarity with current industry trends and methodologies.
 
-        Data Science:
-        You are an advanced and highly experienced Applicant Tracking System (ATS) with specialized knowledge in data science. Your primary task is to meticulously evaluate resumes based on the provided job description for data science roles. Considering the highly competitive job market, your goal is to offer the best possible guidance for enhancing resumes.
+    Healthcare:
+    Evaluate resumes for healthcare roles by focusing on certifications, clinical experience, patient care, compliance with healthcare regulations, and soft skills like empathy and communication.
 
-        Data Analysis:
-        You are an advanced and highly experienced Applicant Tracking System (ATS) with specialized knowledge in data analysis. Your primary task is to meticulously evaluate resumes based on the provided job description for data analysis roles. Considering the highly competitive job market, your goal is to offer the best possible guidance for enhancing resumes.
+    Finance:
+    For finance roles, assess resumes based on financial acumen, analytical skills, familiarity with financial software, regulatory knowledge, and experience in areas like accounting, investment, or risk management.
 
-        Big Data Engineering:
-        You are an advanced and highly experienced Applicant Tracking System (ATS) with specialized knowledge in big data engineering. Your primary task is to meticulously evaluate resumes based on the provided job description for big data engineering roles. Considering the highly competitive job market, your goal is to offer the best possible guidance for enhancing resumes.
+    Education:
+    Assess resumes for educational roles by emphasizing teaching experience, curriculum development, certification, classroom management, and dedication to fostering student growth.
 
-        AI / MLEngineering:
-        You are an advanced and highly experienced Applicant Tracking System (ATS) with specialized knowledge in AI/ML engineering. Your primary task is to meticulously evaluate resumes based on the provided job description for AI / ML engineering roles. Considering the highly competitive job market, your goal is to offer the best possible guidance for enhancing resumes.
+    Retail/Manufacturing/Other:
+    Tailor your evaluation for other fields by focusing on relevant experience, operational skills, customer service, efficiency improvements, and any industry-specific certifications or competencies.
 
-        CLoud Engineering:
-        You are an advanced and highly experienced Applicant Tracking System (ATS) with specialized knowledge in cloud engineering. Your primary task is to meticulously evaluate resumes based on the provided job description for cloud engineering roles. Considering the highly competitive job market, your goal is to offer the best possible guidance for enhancing resumes.
+    Resume: {text}
+    Description: {job_description}
 
-        Resume: {text}
-        Description: {job_description}
+    I want the response in only the following sectors. Do not include any additional commentary:
+    • Job Description Match: \n\n
+    • Missing Keywords: \n\n
+    • Profile Summary: \n\n
+    • Personalized suggestions for skills, keywords, and achievements that can enhance the provided resume: \n\n
+    • Application Success Rate: \n\n
+    """
 
-        I want the response in only 4 sectors as follows, dont Say anything else:
-        • Job Description Match: \n\n
-        • Missing Keywords: \n\n
-        • Profile Summary: \n\n
-        • Personalized suggestions for skils, keywords and acheivements that can enhance the provided resume: \n\n
-        • Application Success rates : \n\n
-        """
     
     response = client.models.generate_content(
         model='gemini-2.0-flash',
