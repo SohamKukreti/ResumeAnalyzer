@@ -1,0 +1,67 @@
+.card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+.drop-area {
+    border: 2px dashed #d1d5db;
+    transition: all 0.3s;
+}
+.drop-area:hover, .drop-area.active {
+    border-color: #6366F1;
+    background-color: rgba(99, 102, 241, 0.05);
+}
+.progress-bar {
+    height: 4px;
+    background-color: #e5e7eb;
+    border-radius: 2px;
+    overflow: hidden;
+}
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #6366F1, #8B5CF6);
+    transition: width 0.5s ease;
+}
+.result-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+}
+.result-card.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+.match-indicator {
+    position: relative;
+    height: 150px;
+    width: 150px;
+}
+.loading-overlay {
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: rgba(0, 0, 0, 0.7);
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 50;
+}
+/* Add this rule to enforce hiding when .hidden is present */
+.loading-overlay.hidden {
+    display: none !important;
+}
+.spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 4px solid white;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
